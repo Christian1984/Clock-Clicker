@@ -3,6 +3,17 @@
   to { transform: scale(0.1); }
 }
 
+@keyframes feedback {
+  from { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  to { 
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
 html, 
 body {
   height: 100%;
@@ -52,7 +63,14 @@ body {
   margin: 1em;
 }
 
-.mainGame {
+.pulseWrapper,
+.feedbackWrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+
   display: flex;
   flex-grow: 1;
   height: 100%;
@@ -60,14 +78,15 @@ body {
   justify-content: center;
 }
 
-#pulse {
+#pulse-active {
   width:300px;
   height: 300px;
   border: 1px solid white;
   border-radius: 50%;
   filter: blur(1px);
+  animation: pulse 1s linear forwards;
 }
 
-#pulse.pulse-active {
-  animation: pulse 1s linear forwards;
+#feedback-active {
+  animation: feedback 0.3s ease-in-out forwards;
 }

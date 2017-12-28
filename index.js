@@ -9,17 +9,52 @@
   const body = document.querySelector("body");
   const scoreDisplay = document.querySelector("#score");
   const newScoreDisplay = document.querySelector("#newScore");
-  let pulse = document.querySelector("#pulse");
+  const pulseWrapper = document.querySelector(".pulseWrapper");
+  const feedbackWrapper = document.querySelector(".feedbackWrapper");
+
+  const pulseTemplate = document.querySelector("#pulse-template");
+  let pulse = undefined;
+
+  const feedbackTemplate = document.querySelector("#feedback-template");
+  let feedback = undefined;
+
+  function spawnFeedback(millis, newScore) {
+    const newFeedback = feedbackTemplate.cloneNode(true);
+    newFeedback.setAttribute("id", "feedback-active");
+
+    newFeedback.querySelector(".feedback-score").textContent = newScore;
+
+    if (feedback) {
+      feedbackWrapper.replaceChild(newFeedback, feedback);
+    }
+    else {
+      feedbackWrapper.appendChild(newFeedback);
+    }
+
+    feedback = newFeedback;
+  }
+
+  function spawnPulse() {
+    const newPulse = pulseTemplate.cloneNode();
+    newPulse.setAttribute("id", "pulse-active");
+
+    if (pulse) {
+      pulseWrapper.replaceChild(newPulse, pulse);
+    }
+    else {
+      pulseWrapper.appendChild(newPulse);
+    }
+
+    pulse = newPulse;
+  }
 
   function triggerClock() {
+    spawnFeedback(millis, newScore);    
+    spawnPulse();
+
     score += newScore;
     scoreDisplay.textContent = score;
     millis = 0;
-    
-    var newPulse = pulse.cloneNode();
-    pulse.parentNode.replaceChild(newPulse, pulse);
-    pulse = newPulse;
-    pulse.classList.add("pulse-active");
   }
 
   body.addEventListener("click", () => triggerClock());

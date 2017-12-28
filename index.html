@@ -15,12 +15,17 @@
       <div id="newScore" class="debug">0</div>
     </div>
     <div class="mainGame">
-      <div id="pulse" class="pulse-active"></div>
+      <div class="pulseWrapper"></div>
+      <div class="feedbackWrapper"></div>
     </div>
   </div>
-  <!--<div style="display: hidden;">
-      <div id="pulse"></div>    
-  </div>-->
+  <div style="display: hidden;">
+      <div id="pulse-template"></div>
+      <div id="feedback-template">
+        <span class="feedback-text">Perfect!</span>
+        <span class="feedback-score">1000</span>
+      </div>   
+  </div>
 
   <script src="index.js"></script>
 </body>
