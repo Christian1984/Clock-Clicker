@@ -1,8 +1,17 @@
+"use strict";
+
 (function() {
   let score = 0;
+  let perfectStreak = 0;
   let newScore = 0;
   let millis = 0;
   let millisStepsize = 10;
+
+  let deviationThresholds = {
+    perfect: 10,
+    good: 20,
+    okay: 35
+  }
 
   let interval = undefined;
 
@@ -18,10 +27,37 @@
   const feedbackTemplate = document.querySelector("#feedback-template");
   let feedback = undefined;
 
-  function spawnFeedback(millis, newScore) {
+  function getFeedbackColorAndText(deviation) {
+    let text = "POOR";
+    let className = "poor";
+
+    if (deviation <= deviationThresholds.perfect) {
+      text = "PERFECT";
+
+      if (perfectStreak > 1) {
+        text = text + ' \u00D7 ' + perfectStreak;
+      }
+      className = "perfect";
+    }
+    else if (deviation <= deviationThresholds.good) {
+      text = "GOOD";
+      className = "good";
+    }
+    else if (deviation <= deviationThresholds.okay) {
+      text = "OKAY";
+      className = "okay";
+    }
+
+    return { text, className };
+  }
+
+  function spawnFeedback(deviation, newScore) {
     const newFeedback = feedbackTemplate.cloneNode(true);
     newFeedback.setAttribute("id", "feedback-active");
 
+    let colorAndText = getFeedbackColorAndText(deviation);
+    newFeedback.classList.add(colorAndText.className);
+    newFeedback.querySelector(".feedback-text").textContent = colorAndText.text;
     newFeedback.querySelector(".feedback-score").textContent = newScore;
 
     if (feedback) {
@@ -49,7 +85,17 @@
   }
 
   function triggerClock() {
-    spawnFeedback(millis, newScore);    
+    let deviation = Math.abs(millis - 1000) / 10;
+
+    if (deviation <= deviationThresholds.perfect) {
+      perfectStreak++;
+      newScore *= perfectStreak;
+    }
+    else {
+      perfectStreak = 0;
+    }
+
+    spawnFeedback(deviation, newScore);    
     spawnPulse();
 
     score += newScore;

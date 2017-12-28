@@ -1,15 +1,17 @@
 @keyframes pulse {
   from { transform: scale(1); }
-  to { transform: scale(0.1); }
+  to { transform: scale(0.01); }
+  /*from {  }
+  to { width: 0; height: 0; }*/
 }
 
 @keyframes feedback {
   from { 
-    transform: scale(1);
+    transform: scale(1) translateY(0);
     opacity: 1;
   }
   to { 
-    transform: scale(1.5);
+    transform: scale(1.5) translateY(-50px);
     opacity: 0;
   }
 }
@@ -20,12 +22,12 @@ body {
   width: 100%;
   font-family: Helvetica, sans-serif;
   font-weight: 100;
+  color: white;
 }
 
 * {
   margin: 0;
   padding: 0;
-  color: white;
 }
 
 .background {
@@ -70,9 +72,9 @@ body {
   right: 0;
   top: 0;
   bottom: 0;
-
+  
   display: flex;
-  flex-grow: 1;
+  flex-direction: column;
   height: 100%;
   align-items: center;
   justify-content: center;
@@ -88,5 +90,24 @@ body {
 }
 
 #feedback-active {
-  animation: feedback 0.3s ease-in-out forwards;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: feedback 0.6s ease-out forwards;
+}
+
+#feedback-active.poor {
+  color: red;
+}
+
+#feedback-active.okay {
+  color: orange
+}
+
+#feedback-active.good {
+  color: #ffdd00
+}
+
+#feedback-active.perfect {
+  color: #00ff00;
 }
