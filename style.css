@@ -1,0 +1,73 @@
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(0.1); }
+}
+
+html, 
+body {
+  height: 100%;
+  width: 100%;
+  font-family: Helvetica, sans-serif;
+  font-weight: 100;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+.background {
+  position: fixed;
+  left: -20px;
+  right: -20px;
+  top: -20px;
+  bottom: -20px;
+  z-index: 1;
+
+  background:#018DED url(http://unsplash.it/1920/1200?image=967);
+  background-size:cover;
+  filter: blur(8px);
+}
+
+.wrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.topBar > div {
+  margin: 1em;
+}
+
+.mainGame {
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+#pulse {
+  width:300px;
+  height: 300px;
+  border: 1px solid white;
+  border-radius: 50%;
+  filter: blur(1px);
+}
+
+#pulse.pulse-active {
+  animation: pulse 1s linear forwards;
+}
